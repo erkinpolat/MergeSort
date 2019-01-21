@@ -1,0 +1,73 @@
+#mergesort: This one is based on the pseudocode in the textbook
+
+def merge(A, p, q, r):
+    n1 = q - p + 1
+    n2 = r - q
+    
+    L = [0] * (n1) 
+    R = [0] * (n2)
+    
+    for i in range(1, n1):
+        L[i] = A[p + i - 1]
+    for j in range(1, n2):
+        R[j] = A[q + j]
+        
+    L.append(999999)
+    R.append(999999)
+    
+    i = 1
+    j = 1
+    
+    for k in range(p, r):
+        if L[i] <= R[j]:
+            A[k] = L[i]
+            i += 1
+        else:
+            A[k] = R[j]
+            j += 1
+            
+def mergesort(A, p, r):
+    if p < r:
+        q = (p+(r-1))/2
+        mergesort(A, p, q) 
+        mergesort(A, q+1, r) 
+        merge(A, p, q, r)
+    
+
+A = [4, 10, 5, 21, 56, 3, 6, 12, 11]
+print(A)
+print(mergesort(A, 0, 8))
+
+
+
+#Merge Sort: This one is based on a tutorial I found on the internet
+import sys
+
+def mergesort(A):
+    mergesort2(A, 0, len(A) - 1)
+    
+def mergesort2(A, first, last):
+    if first < last:
+        middle = (first + last)//2
+        mergesort2(A, first, middle)
+        mergesort2(A, middle + 1, last)
+        merge(A, first, middle, last)
+        
+def merge(A, first, middle, last):
+    L = A[first:middle + 1]
+    R = A[middle + 1:last + 1]
+    L.append(sys.maxsize)
+    R.append(sys.maxsize)
+    i = j = 0
+    
+    for k in range (first, last + 1):
+        if L[i] <= R[j]:
+            A[k] = L[i]
+            i += 1
+        else:
+            A[k] = R[j]
+            j += 1
+    
+A = [4, 10, 5, 21, 56, 3, 6, 12, 11]
+print(A)
+print(mergesort(A))
